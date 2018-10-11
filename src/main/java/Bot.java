@@ -14,7 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bot extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingBot implements Game_start{
+    private void Game_start() {
+//        this.Game_start();
+        Game_start.main();
+    }
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -47,7 +52,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
 
-    public void onUpdateReceived(Update update) {
+    public void onUpdateReceived(Update update)  {
         Model model = new Model();
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
@@ -58,11 +63,18 @@ public class Bot extends TelegramLongPollingBot {
                 case "/setting":
                     sendMsg(message, "Что будем настраивать?");
                     break;
+                case "/Ok":
+                    sendMsg(message, "Подтвердить");
+                    break;
+                case "/Game":
+                    Game_start();
+                    sendMsg(message, " Game");
+                    break;
                 default:
                     try {
                         sendMsg(message, Weather.getWeather(message.getText(), model));
                     } catch (IOException e) {
-                        sendMsg(message, "Город не найден!");
+                        sendMsg(message, "Подтверждаю! Но если введешь название города, то смогу посмотреть погоду в нем!");
                     }
 
             }
@@ -83,6 +95,7 @@ public class Bot extends TelegramLongPollingBot {
 
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/setting"));
+        keyboardFirstRow.add(new KeyboardButton("/Ok"));
 
         keyboardRowList.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
