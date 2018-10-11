@@ -64,7 +64,7 @@ public class Bot extends TelegramLongPollingBot implements Game_start{
                     sendMsg(message, "Что будем настраивать?");
                     break;
                 case "/Ok":
-                    sendMsg(message, "Подтвердить");
+                    sendMsg(message, "Так точно, мой господин!!!");
                     break;
                 case "/Game":
                     Game_start();
@@ -96,6 +96,8 @@ public class Bot extends TelegramLongPollingBot implements Game_start{
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/setting"));
         keyboardFirstRow.add(new KeyboardButton("/Ok"));
+        keyboardFirstRow.add(new KeyboardButton("/Game"));
+
 
         keyboardRowList.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
